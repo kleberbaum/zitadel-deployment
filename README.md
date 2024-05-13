@@ -58,7 +58,7 @@ kubectl delete pvc datadir-db-cockroachdb-1
 kubectl delete pvc datadir-db-cockroachdb-2
 
 kubectl get configmap
-kubectl delete configmap zitadel-values.yaml
+kubectl delete configmap zitadel-config-yaml
 ```
 
 Now, open https://accounts.photonq.org in your browser and log in with the following credentials:
