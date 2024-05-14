@@ -1,6 +1,32 @@
 zitadel:
   masterkey: x123456789012345678901234567891y
   configmapConfig:
+    SystemAPIUsers:
+      # Add keys for authentication of the systemAPI here:
+      # you can specify any name for the user, but they will have to match the `issuer` and `sub` claim in the JWT:
+      - superuser:
+          #Path: /path/to/superuser/ey.pem  # you can provide the key either by reference with the path
+          KeyData: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF6ZUtLU1VubUpyZityRllPdkRUNApKNzJ3ZXFuayt3cDZMaThNYXI0RHJaWitlQTRRcS9HVTY5ZjdoaTBxTVJ0SlN4SzVleFRmandLcjRPRTFKMWZTCjJvTmRVclNVZmFTc3d5QmF5Ujk2YXVVQzVLUTRmQVpHalFMRjE4K3d6Q3ZrdlNHcVdtNFkxaXhTWkYxQlhNak8KRWFlbThybEFvdkVBd052bGYxbGlSM2xYcG9LR1F2NVhBRkFxS0hsTjhBNW1FOVlTRjRYSHFzNndRck1pTVI2VApNS1ZKK1hkWjNuaVFSZ29TZ2JtM1NqWVFJRmZYUDdhdHVocUIwamNTM3hzckZoSlhaSXNRQTgzQ2QzVVJYbnh0Ck02OFJPWFFZZ3lYbVJtU3d6dHB6TmpmQWgzbkF2bUhrUnFZWXdSZ3I2U1lNT0tNMEEyVGcxWGwzZ1YrMXY2NFgKb3dJREFRQUIKLS0tLS1FTkQgUFVCTElDIEtFWS0tLS0tCg==     # or you can directly embed it as base64 encoded value
+          Memberships:
+            # MemberType System allows the user to access all APIs for all instances or organizations
+            - MemberType: System
+              Roles:
+                - "SYSTEM_OWNER"
+                # Actually, we don't recommend adding IAM_OWNER and ORG_OWNER to the System membership, as this basically enables god mode for the system user
+                - "IAM_OWNER"
+                - "ORG_OWNER"
+      #       # MemberType IAM and Organization let you restrict access to a specific instance or organization by specifying the AggregateID
+      #       - MemberType: IAM
+      #         Roles: "IAM_OWNER"
+      #         AggregateID: "123456789012345678"
+      #       - MemberType: Organization
+      #         Roles: "ORG_OWNER"
+      #         AggregateID: "123456789012345678"
+      # - superuser2:
+      #     # If no memberships are specified, the user has a membership of type System with the role "SYSTEM_OWNER"
+      #     KeyData: <base64 encoded key>     # or you can directly embed it as base64 encoded value
+      # Configure the SystemAPIUsers by environment variable using JSON notation:
+      # ZITADEL_SYSTEMAPIUSERS='{"systemuser":{"Path":"/path/to/superuser/key.pem"},"systemuser2":{"KeyData":"<base64 encoded key>"}}'
     SystemDefaults:
       SecretGenerators:
         MachineKeySize: 2048 # ZITADEL_SYSTEMDEFAULTS_SECRETGENERATORS_MACHINEKEYSIZE
