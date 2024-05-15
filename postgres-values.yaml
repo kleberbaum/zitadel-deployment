@@ -6,10 +6,20 @@ tls:
   certificatesSecret: postgres-cert
   certFilename: "tls.crt"
   certKeyFilename: "tls.key"
+## PostgreSQL parameters
 postgresql:
-  extendedConf:
-    extra_pg_hba_conf: |
-      hostssl all all 0.0.0.0/0 cert clientcert=1
-      hostssl all all ::/0 cert clientcert=1
+  configuration: ""
+  ## @param postgresql.pgHbaConfiguration PostgreSQL client authentication configuration
+  ## You can use this parameter to specify the content for pg_hba.conf
+  ## Otherwise, a repmgr.conf will be generated based on the environment variables
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql-repmgr#configuration
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql-repmgr#configuration-file
+  ## Example:
+  pgHbaConfiguration: |-
+    hostssl  all all 0.0.0.0/0 cert clientcert=1
+    hostssl  all all ::/0 cert clientcert=1
+
+
+
 auth:
   postgresPassword: "abc"
