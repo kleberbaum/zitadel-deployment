@@ -11,12 +11,16 @@ wget https://raw.githubusercontent.com/fhkit/zitadel-charts/main/postgres-values
 wget https://raw.githubusercontent.com/fhkit/zitadel-charts/main/zitadel-values.yaml
 
 # Generate TLS certificates
-kubectl apply -f ./certs-job.yaml --namespace zitadel --create-namespace
+kubectl apply -f ./certs-job.yaml --namespace zitadel
 kubectl wait --for=condition=complete job/create-certs --namespace zitadel
 
 # Install Postgres
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm install --wait zitadel-db bitnami/postgresql --version 15.3.2 --values ./postgres-values.yaml --namespace zitadel --create-namespace
+
+# Install Pgadmin
+helm repo add runix https://helm.runix.net
+helm install pgadmin4 runix/pgadmin4 --values ./pgadmin-values.yaml --namespace zitadel --create-namespace
 
 # Install ZITADEL
 helm repo add zitadel https://charts.zitadel.com
