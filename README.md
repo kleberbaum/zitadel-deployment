@@ -16,7 +16,7 @@ kubectl wait --for=condition=complete job/create-certs
 
 # Install Postgres
 helm repo add bitnami https://charts.bitnami.com/bitnami
-helm install --wait db bitnami/postgresql --version 15.2.12 --values ./postgres-values.yaml
+helm install --wait zitadel-db bitnami/postgresql --version 15.3.2 --values ./postgres-values.yaml
 
 # Install ZITADEL
 helm repo add zitadel https://charts.zitadel.com

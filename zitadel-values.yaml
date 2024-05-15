@@ -125,7 +125,7 @@ zitadel:
       Enabled: false
     Database:
       Postgres:
-        Host: db-postgresql
+        Host: zitadel-db-postgresql
         Port: 5432
         Database: zitadel
         MaxOpenConns: 20
@@ -148,6 +148,6 @@ zitadel:
         Admin:
           Password: abc
 
-  dbSslCaCrtSecret: postgres-cert
-  dbSslAdminCrtSecret: postgres-cert
+  dbSslCaCrtSecret: zitadel-postgres-cert
+  dbSslAdminCrtSecret: zitadel-postgres-cert
   dbSslUserCrtSecret: zitadel-cert

@@ -3,7 +3,7 @@ volumePermissions:
 tls:
   enabled: true
   # This should be an existing Kubernetes Secret with your SSL certificates
-  certificatesSecret: postgres-cert
+  certificatesSecret: zitadel-postgres-cert
   certFilename: "tls.crt"
   certKeyFilename: "tls.key"
 primary:

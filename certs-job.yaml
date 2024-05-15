@@ -62,7 +62,7 @@ spec:
               x509_extensions = v3_req
               prompt = no
               [req_distinguished_name]
-              CN = db-postgresql
+              CN = zitadel-db-postgresql
               [v3_req]
               keyUsage = keyEncipherment, dataEncipherment
               extendedKeyUsage = serverAuth
@@ -112,10 +112,10 @@ spec:
             createKey ca
             openssl req -x509 -new -nodes -key ca.key -days 36500 -out ca.crt -subj "/CN=Netsnek"
 
-            createKey postgres
-            createSigningRequest postgres
-            signCertificate postgres.csr postgres.crt ca.crt ca.key
-            createCertSecret postgres
+            createKey zitadel-postgres
+            createSigningRequest zitadel-postgres
+            signCertificate zitadel-postgres.csr zitadel-postgres.crt ca.crt ca.key
+            createCertSecret zitadel-postgres
 
             createKey zitadel-internal
             createSigningRequest zitadel-internal
