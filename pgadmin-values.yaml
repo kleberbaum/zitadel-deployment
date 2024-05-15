@@ -136,7 +136,7 @@ existingSecret: ""
 env:
   # can be email or nickname
   pgpassfile: /var/lib/pgadmin/storage/pgadmin/file.pgpass
-  email: admin@netsnek.com
+  email: zitadel-admin@netsnek.com
   password: SuperSecret
   
   enhanced_cookie_protection: "False"
