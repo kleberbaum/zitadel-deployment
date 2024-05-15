@@ -6,6 +6,8 @@ tls:
   certificatesSecret: zitadel-postgres-cert
   certFilename: "tls.crt"
   certKeyFilename: "tls.key"
+auth:
+  postgresPassword: "abc"
 primary:
   ## @param primary.pgHbaConfiguration PostgreSQL Primary client authentication configuration
   ## ref: https://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html
@@ -58,9 +60,3 @@ primary:
     ##
     nodePorts:
       postgresql: "30543"
-
-auth:
-  postgresPassword: "abc"
-
-
-
