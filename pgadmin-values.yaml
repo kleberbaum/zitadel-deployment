@@ -38,26 +38,58 @@ serverDefinitions:
 
   servers: |-
     "1": {
-      "Name": "UAT",
-      "Group": "Servers",
+      "Name": "Primary c001",
+      "Group": "Primary",
       "Port": 5432,
-      "Username": "db",
-      "Host": "server.uat",
+      "Username": "postgres",
+      "Host": "192.168.1.1",
       "SSLMode": "prefer",
-      "MaintenanceDB": "db",
-      "PassFile": "/var/lib/pgadmin/storage/pgadmin/file.pgpass"
-      "Shared": true
+      "MaintenanceDB": "postgres"
     },
     "2": {
-      "Name": "DEV",
-      "Group": "Servers",
+      "Name": "Primary c002",
+      "Group": "Primary",
       "Port": 5432,
-      "Username": "db",
-      "Host": "server.dev",
+      "Username": "postgres",
+      "Host": "192.168.1.1",
       "SSLMode": "prefer",
-      "MaintenanceDB": "db",
-      "PassFile": "/var/lib/pgadmin/storage/pgadmin/file.pgpass"
-      "Shared": true
+      "MaintenanceDB": "postgres"
+    },
+    "3": {
+      "Name": "Primary c003",
+      "Group": "Primary",
+      "Port": 5432,
+      "Username": "postgres",
+      "Host": "192.168.1.1",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres"
+    },
+    "4": {
+      "Name": "Replication c001",
+      "Group": "Replication",
+      "Port": 5432,
+      "Username": "postgres",
+      "Host": "192.168.1.1",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres"
+    },
+    "5": {
+      "Name": "Replication c002",
+      "Group": "Replication",
+      "Port": 5432,
+      "Username": "postgres",
+      "Host": "192.168.1.1",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres"
+    },
+    "6": {
+      "Name": "Replication c003",
+      "Group": "Replication",
+      "Port": 5432,
+      "Username": "postgres",
+      "Host": "192.168.1.1",
+      "SSLMode": "prefer",
+      "MaintenanceDB": "postgres"
     }
 
 networkPolicy:
