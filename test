@@ -1,0 +1,29 @@
+
+  ## @param diagnosticMode.enabled Enable diagnostic mode (all probes will be disabled and the command will be overridden)
+  ##
+  enabled: false
+  ## @param diagnosticMode.command [array] Command to override all containers in the deployment
+  ##
+  command:
+    - sleep
+  ## @param diagnosticMode.args [array] Args to override all containers in the deployment
+  ##
+  args:
+    - infinity
+## @section PostgreSQL with Repmgr parameters
+
+## PostgreSQL parameters
+##
+postgresql:
+  configuration: ""
+  ## @param postgresql.pgHbaConfiguration PostgreSQL client authentication configuration
+  ## You can use this parameter to specify the content for pg_hba.conf
+  ## Otherwise, a repmgr.conf will be generated based on the environment variables
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql-repmgr#configuration
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql-repmgr#configuration-file
+  ## Example:
+  pgHbaConfiguration: |-
+    hostssl  all all 0.0.0.0/0 cert clientcert=1
+    hostssl  all all ::/0 cert clientcert=1
+
+
