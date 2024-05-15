@@ -72,7 +72,7 @@ spec:
 
             function signCertificate() {
               INCSR=$1 OUTCRT=$2 CA_CRT=$3 CA_KEY=$4
-              openssl x509 -req -in $INCSR -CA $CA_CRT -CAkey $CA_KEY -CAcreateserial -days 365 -out $OUTCRT -extensions v3_req -extfile <(generateServerConfig)
+              openssl x509 -req -in $INCSR -CA $CA_CRT -CAkey $CA_KEY -CAcreateserial -days 36500 -out $OUTCRT -extensions v3_req -extfile <(generateServerConfig)
             }
 
             function secretJson {
