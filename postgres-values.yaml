@@ -58,3 +58,6 @@ primary:
     ##
     nodePorts:
       postgresql: "30543"
+
+auth:
+  postgresPassword: "abc"
