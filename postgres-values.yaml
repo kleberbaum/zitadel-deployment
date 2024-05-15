@@ -18,8 +18,8 @@ primary:
   pgHbaConfiguration: |-
     # TYPE     DATABASE      USER       ADDRESS                 METHOD
     hostnossl  all           all        0.0.0.0/0               reject  # must be the 1st line!
-    host       all           all        0.0.0.0/0               cert clientcert=verify-full
-    host       all           all        ::/0                    cert clientcert=verify-full
+    hostnossl  all           all        0.0.0.0/0               cert clientcert=verify-full
+    hostnossl  all           all        ::/0                    cert clientcert=verify-full
     #local      all           all                                md5
     #host       all           all        127.0.0.1/32            md5
     #host       all           all        ::1/128                 md5
