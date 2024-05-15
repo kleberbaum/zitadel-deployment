@@ -44,7 +44,8 @@ serverDefinitions:
       "Username": "postgres",
       "Host": "192.168.1.1",
       "SSLMode": "prefer",
-      "MaintenanceDB": "postgres"
+      "MaintenanceDB": "postgres",
+      "Shared": true
     },
     "2": {
       "Name": "Primary c002",
@@ -53,43 +54,8 @@ serverDefinitions:
       "Username": "postgres",
       "Host": "192.168.1.1",
       "SSLMode": "prefer",
-      "MaintenanceDB": "postgres"
-    },
-    "3": {
-      "Name": "Primary c003",
-      "Group": "Primary",
-      "Port": 5432,
-      "Username": "postgres",
-      "Host": "192.168.1.1",
-      "SSLMode": "prefer",
-      "MaintenanceDB": "postgres"
-    },
-    "4": {
-      "Name": "Replication c001",
-      "Group": "Replication",
-      "Port": 5432,
-      "Username": "postgres",
-      "Host": "192.168.1.1",
-      "SSLMode": "prefer",
-      "MaintenanceDB": "postgres"
-    },
-    "5": {
-      "Name": "Replication c002",
-      "Group": "Replication",
-      "Port": 5432,
-      "Username": "postgres",
-      "Host": "192.168.1.1",
-      "SSLMode": "prefer",
-      "MaintenanceDB": "postgres"
-    },
-    "6": {
-      "Name": "Replication c003",
-      "Group": "Replication",
-      "Port": 5432,
-      "Username": "postgres",
-      "Host": "192.168.1.1",
-      "SSLMode": "prefer",
-      "MaintenanceDB": "postgres"
+      "MaintenanceDB": "postgres",
+      "Shared": true
     }
 
 networkPolicy:
@@ -128,16 +94,20 @@ extraSecretMounts:
   #   readOnly: true
   - name: certs
     secret: zitadel-pgadmin-cert
-    mountPath: "/var/lib/pgadmin/storage/pgadmin/"
+    mountPath: "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/pgadmin-cert/"
+    readOnly: true
+  - name: certs
+    secret: zitadel-pgadmin-cert
+    mountPath: "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/postgres-cert/"
     readOnly: true
 
 existingSecret: ""
 
 env:
   # can be email or nickname
-  pgpassfile: /var/lib/pgadmin/storage/pgadmin/file.pgpass
   email: zitadel-admin@netsnek.com
   password: SuperSecret
+  #pgpassfile: /var/lib/pgadmin/storage/pgadmin/file.pgpass
   
   enhanced_cookie_protection: "False"
 persistentVolume:
@@ -180,7 +150,7 @@ VolumePermissions:
 extraInitContainers: |
   - name: add-folder-for-pgpass
     image: "dpage/pgadmin4:4.23"
-    command: ["/bin/mkdir", "-p", "/var/lib/pgadmin/storage/pgadmin"]
+    command: ["/bin/mkdir", "-p", "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/{pgadmin-cert,postgres-cert}"]
     volumeMounts:
       - name: pgadmin-data
         mountPath: /var/lib/pgadmin
