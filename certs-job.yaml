@@ -126,6 +126,11 @@ spec:
             createSigningRequest zitadel-external
             signCertificate zitadel-external.csr zitadel-external.crt ca.crt ca.key
             createCertSecret zitadel-external
+
+            createKey zitadel-pgadmin
+            createSigningRequest zitadel-pgadmin
+            signCertificate zitadel-pgadmin.csr zitadel-pgadmin.crt ca.crt ca.key
+            createCertSecret zitadel-pgadmin
         image: bash:5.2.15
         imagePullPolicy: IfNotPresent
         name: create-certs
