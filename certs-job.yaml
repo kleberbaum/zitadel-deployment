@@ -117,10 +117,15 @@ spec:
             signCertificate postgres.csr postgres.crt ca.crt ca.key
             createCertSecret postgres
 
-            createKey zitadel
-            createSigningRequest zitadel
-            signCertificate zitadel.csr zitadel.crt ca.crt ca.key
-            createCertSecret zitadel
+            createKey zitadel-internal
+            createSigningRequest zitadel-internal
+            signCertificate zitadel-internal.csr zitadel-internal.crt ca.crt ca.key
+            createCertSecret zitadel-internal
+
+            createKey zitadel-external
+            createSigningRequest zitadel-external
+            signCertificate zitadel-external.csr zitadel-external.crt ca.crt ca.key
+            createCertSecret zitadel-external
         image: bash:5.2.15
         imagePullPolicy: IfNotPresent
         name: create-certs
