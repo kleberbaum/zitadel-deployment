@@ -6,19 +6,23 @@ tls:
   certificatesSecret: postgres-cert
   certFilename: "tls.crt"
   certKeyFilename: "tls.key"
-## PostgreSQL parameters
-postgresql:
-  ## @param postgresql.pgHbaConfiguration PostgreSQL client authentication configuration
-  ## You can use this parameter to specify the content for pg_hba.conf
-  ## Otherwise, a repmgr.conf will be generated based on the environment variables
-  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql-repmgr#configuration
-  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql-repmgr#configuration-file
-  ## Example:
+primary:
+  ## @param primary.pgHbaConfiguration PostgreSQL Primary client authentication configuration
+  ## ref: https://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html
+  ## e.g:#
+  ## pgHbaConfiguration: |-
+  ##   local all all trust
+  ##   host all all localhost trust
+  ##   host mydatabase mysuser 192.168.0.0/24 md5
+  ##
   pgHbaConfiguration: |-
-    hostssl  all all 0.0.0.0/0 cert clientcert=1
-    hostssl  all all ::/0 cert clientcert=1
-
-
+    # TYPE     DATABASE      USER       ADDRESS                 METHOD
+    hostnossl  all           all        0.0.0.0/0               reject  # must be the 1st line!
+    host       all           all        0.0.0.0/0               cert clientcert=verify-full
+    host       all           all        ::/0                    cert clientcert=verify-full
+    #local      all           all                                md5
+    #host       all           all        127.0.0.1/32            md5
+    #host       all           all        ::1/128                 md5
 
 auth:
   postgresPassword: "abc"
