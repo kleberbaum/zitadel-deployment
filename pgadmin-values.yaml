@@ -92,12 +92,12 @@ extraSecretMounts:
   #   subPath: pgpassfile
   #   mountPath: "/var/lib/pgadmin/storage/pgadmin/file.pgpass"
   #   readOnly: true
-  - name: certs
+  - name: pgadmin-certs
     secret: zitadel-pgadmin-cert
     mountPath: "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/pgadmin-cert/"
     readOnly: true
-  - name: certs
-    secret: zitadel-pgadmin-cert
+  - name: postgres-certs
+    secret: zitadel-postgres-cert
     mountPath: "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/postgres-cert/"
     readOnly: true
 
