@@ -18,11 +18,12 @@ primary:
   pgHbaConfiguration: |-
     # TYPE     DATABASE      USER       ADDRESS                 METHOD
     hostnossl  all           all        0.0.0.0/0               reject  # must be the 1st line!
-    hostssl    all           all        0.0.0.0/0               cert clientcert=verify-full
-    hostssl    all           all        ::/0                    cert clientcert=verify-full
     local      all           all                                md5
     host       all           all        127.0.0.1/32            md5
     host       all           all        ::1/128                 md5
+    hostssl    all           all        0.0.0.0/0               cert clientcert=verify-full
+    hostssl    all           all        ::/0                    cert clientcert=verify-full
+
   ## PostgreSQL Primary resource requests and limits
   ## ref: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/
   ## @param primary.resourcesPreset Set container resources according to one common preset (allowed values: none, nano, micro, small, medium, large, xlarge, 2xlarge). This is ignored if primary.resources is set (primary.resources is recommended for production).
