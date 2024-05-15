@@ -46,6 +46,7 @@ serverDefinitions:
       "SSLMode": "prefer",
       "MaintenanceDB": "db",
       "PassFile": "/var/lib/pgadmin/storage/pgadmin/file.pgpass"
+      "Shared": true
     },
     "2": {
       "Name": "DEV",
@@ -56,6 +57,7 @@ serverDefinitions:
       "SSLMode": "prefer",
       "MaintenanceDB": "db",
       "PassFile": "/var/lib/pgadmin/storage/pgadmin/file.pgpass"
+      "Shared": true
     }
 
 networkPolicy:
@@ -72,10 +74,10 @@ ingress:
       paths:
         - path: /
           pathType: Prefix
-  tls:
-    - secretName: photonq-tls
-      # hosts:
-      #   - pgadmin.host.net
+  # tls:
+  #   - secretName: pgadmin-tls
+  #     hosts:
+  #       - pgadmin.host.net
 
 # Additional config maps to be mounted inside a container
 # Can be used to map config maps for sidecar as well
