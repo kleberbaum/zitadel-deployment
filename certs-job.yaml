@@ -64,8 +64,8 @@ spec:
               [req_distinguished_name]
               CN = zitadel-db-postgresql
               [v3_req]
-              keyUsage = keyEncipherment, dataEncipherment
-              extendedKeyUsage = serverAuth
+              keyUsage = keyEncipherment, dataEncipherment, digitalSignature
+              extendedKeyUsage = serverAuth, clientAuth
               subjectAltName = DNS:postgres,DNS:zitadel,DNS:db-postgresql,DNS:zitadel-db-postgresql,IP:131.130.102.246
             EOF
             }
