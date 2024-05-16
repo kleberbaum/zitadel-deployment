@@ -52,6 +52,43 @@ serverDefinitions:
       ConnectionParameters:
         passfile: "../../file.pgpass"
 
+extraSecretMounts:
+  - name: pgpassfile
+    secret: pgadmin-pgpassfile-secret
+    mountPath: "/tmp/file.pgpass"
+    subPath: pgpassfile
+  - name: pgadmin-certs
+    secret: zitadel-pgadmin-cert
+    mountPath: "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/pgadmin-cert/"
+    readOnly: true
+  - name: postgres-certs
+    secret: zitadel-postgres-cert
+    mountPath: "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/postgres-cert/"
+    readOnly: true
+
+## Additional InitContainers to initialize the pod
+##
+extraInitContainers: |
+  - name: prepare-pgpass
+    image: busybox:latest
+    imagePullPolicy: Always
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cp /tmp/file.pgpass /var/lib/pgadmin/file.pgpass
+        chown 5050:5050 /var/lib/pgadmin/file.pgpass
+        chmod 600 /var/lib/pgadmin/file.pgpass
+    volumeMounts:
+      - name: pgadmin-data
+        mountPath: /var/lib/pgadmin
+      - name: pgpassfile
+        mountPath: /tmp/file.pgpass
+        subPath: pgpassfile
+        readOnly: true
+    securityContext:
+      runAsUser: 0
+
 networkPolicy:
   enabled: true
 
@@ -75,31 +112,6 @@ ingress:
 # Can be used to map config maps for sidecar as well
 extraConfigmapMounts: []
 
-extraSecretMounts:
-  # - name: config-local
-  #   secret: pgadmin4-config
-  #   subPath: config_local.py
-  #   mountPath: "/pgadmin4/config_local.py"
-  #   readOnly: true
-  # - name: pgpassfile
-  #   secret: pgpassfile
-  #   subPath: pgpassfile
-  #   mountPath: "/var/lib/pgadmin/storage/pgadmin/file.pgpass"
-  #   readOnly: true
-  - name: pgadmin-certs
-    secret: zitadel-pgadmin-cert
-    mountPath: "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/pgadmin-cert/"
-    readOnly: true
-  - name: postgres-certs
-    secret: zitadel-postgres-cert
-    mountPath: "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/postgres-cert/"
-    readOnly: true
-  - name: pgpassfile
-    secret: pgadmin-pgpassfile-secret
-    mountPath: "/tmp/file.pgpass"
-    subPath: pgpassfile
-    readOnly: true
-
 existingSecret: ""
 
 env:
@@ -109,6 +121,7 @@ env:
   #pgpassfile: /var/lib/pgadmin/storage/pgadmin/file.pgpass
   
   enhanced_cookie_protection: "False"
+
 persistentVolume:
   
   enabled: true
@@ -143,22 +156,6 @@ VolumePermissions:
   ## If true, enables an InitContainer to set permissions on /var/lib/pgadmin.
   ##
   enabled: true
-
-## Additional InitContainers to initialize the pod
-##
-extraInitContainers: |
-  - name: add-folder-for-pgpass
-    image: "dpage/pgadmin4:4.23"
-    command: ["/bin/mkdir", "-p", "/var/lib/pgadmin/storage/pgadmin"]
-    volumeMounts:
-      - name: pgadmin-data
-        mountPath: /var/lib/pgadmin
-      - name: pgpassfile
-        mountPath: /tmp/file.pgpass
-        subPath: pgpassfile
-        readOnly: true
-    securityContext:
-      runAsUser: 5050
 
 containerPorts:
   http: 80
