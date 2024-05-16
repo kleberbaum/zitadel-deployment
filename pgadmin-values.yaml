@@ -70,8 +70,7 @@ extraSecretMounts:
 ##
 extraInitContainers: |
   - name: prepare-pgpass
-    image: busybox:latest
-    imagePullPolicy: Always
+    image: "dpage/pgadmin4:4.23"
     command:
       - /bin/sh
       - -c
@@ -86,7 +85,7 @@ extraInitContainers: |
         mountPath: /tmp/file.pgpass
         subPath: pgpassfile
     securityContext:
-      runAsUser: 0
+      runAsUser: 5050
 
 networkPolicy:
   enabled: true
