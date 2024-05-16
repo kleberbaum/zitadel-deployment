@@ -55,7 +55,7 @@ serverDefinitions:
     server1:
       Name: "Zitadel"
       Group: "Servers"
-      HostAddr: "131.130.102.246"
+      Host: "131.130.102.246"
       Port: 5432
       MaintenanceDB: "postgres"
       Username: "postgres"
@@ -68,7 +68,7 @@ serverDefinitions:
     server2:
       Name: "Zitadel2"
       Group: "Servers"
-      HostAddr: "131.130.102.246"
+      Host: "131.130.102.246"
       Port: 5432
       MaintenanceDB: "postgres"
       Username: "zitadel"
