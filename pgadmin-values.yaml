@@ -43,7 +43,7 @@ serverDefinitions:
   servers:
     server1:
       Name: "Zitadel"
-      Group: "Server"
+      Group: "Servers"
       Host: "131.130.102.246"
       Port: 5432
       Username: "postgres"
