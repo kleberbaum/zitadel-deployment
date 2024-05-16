@@ -75,6 +75,7 @@ extraInitContainers: |
       - /bin/sh
       - -c
       - |
+        mkdir -p /var/lib/pgadmin/storage/
         cat /tmp/file.pgpass > /var/lib/pgadmin/storage/file.pgpass
     volumeMounts:
       - name: pgadmin-data
