@@ -7,5 +7,41 @@ tls:
   certFilename: "tls.crt"
   certKeyFilename: "tls.key"
   #certCAFilename: "ca.crt"
-auth:
-  postgresPassword: "abc"
+global:
+  postgresql:
+    ## @param global.postgresql.auth.postgresPassword Password for the "postgres" admin user (overrides `auth.postgresPassword`)
+    ## @param global.postgresql.auth.username Name for a custom user to create (overrides `auth.username`)
+    ## @param global.postgresql.auth.password Password for the custom user to create (overrides `auth.password`)
+    ## @param global.postgresql.auth.database Name for a custom database to create (overrides `auth.database`)
+    ## @param global.postgresql.auth.existingSecret Name of existing secret to use for PostgreSQL credentials (overrides `auth.existingSecret`).
+    ## @param global.postgresql.auth.secretKeys.adminPasswordKey Name of key in existing secret to use for PostgreSQL credentials (overrides `auth.secretKeys.adminPasswordKey`). Only used when `global.postgresql.auth.existingSecret` is set.
+    ## @param global.postgresql.auth.secretKeys.userPasswordKey Name of key in existing secret to use for PostgreSQL credentials (overrides `auth.secretKeys.userPasswordKey`). Only used when `global.postgresql.auth.existingSecret` is set.
+    ## @param global.postgresql.auth.secretKeys.replicationPasswordKey Name of key in existing secret to use for PostgreSQL credentials (overrides `auth.secretKeys.replicationPasswordKey`). Only used when `global.postgresql.auth.existingSecret` is set.
+    ##
+    auth:
+      postgresPassword: "abc"
+      # username: ""
+      # password: ""
+      # database: ""
+      # existingSecret: ""
+      # secretKeys:
+      #   adminPasswordKey: ""
+      #   userPasswordKey: ""
+      #   replicationPasswordKey: ""
+primary:
+  ## @param primary.pgHbaConfiguration PostgreSQL Primary client authentication configuration
+  ## ref: https://www.postgresql.org/docs/current/static/auth-pg-hba-conf.html
+  ## e.g:#
+  ## pgHbaConfiguration: |-
+  ##   local all all trust
+  ##   host all all localhost trust
+  ##   host mydatabase mysuser 192.168.0.0/24 md5
+  ##
+  pgHbaConfiguration: |-
+    # TYPE     DATABASE      USER       ADDRESS                 METHOD
+    hostnossl  all           all        0.0.0.0/0               reject  # must be the 1st line!
+    local      all           all                                md5
+    host       all           all        127.0.0.1/32            md5
+    host       all           all        ::1/128                 md5
+    hostssl    all           all        0.0.0.0/0               md5 #clientcert=verify-ca
+    hostssl    all           all        ::/0                    md5 #clientcert=verify-ca
