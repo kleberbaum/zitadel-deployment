@@ -9,6 +9,7 @@ For creating the TLS certificates, we run a Kubernetes job that creates a self-s
 wget https://raw.githubusercontent.com/fhkit/zitadel-charts/main/certs-job.yaml
 wget https://raw.githubusercontent.com/fhkit/zitadel-charts/main/postgres-values.yaml
 wget https://raw.githubusercontent.com/fhkit/zitadel-charts/main/zitadel-values.yaml
+wget https://raw.githubusercontent.com/fhkit/zitadel-charts/main/pgadmin.yaml
 
 # Generate TLS certificates
 kubectl apply -f ./certs-job.yaml --namespace zitadel
