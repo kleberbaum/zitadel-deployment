@@ -69,15 +69,9 @@ extraSecretMounts:
 ## Additional InitContainers to initialize the pod
 ##
 extraInitContainers: |
-  - name: prepare-pgpass
+  - name: add-folder-for-pgpass
     image: "dpage/pgadmin4:4.23"
-    command:
-      - /bin/sh
-      - -c
-      - |
-        cp /tmp/file.pgpass /var/lib/pgadmin/file.pgpass
-        chown 5050:5050 /var/lib/pgadmin/file.pgpass
-        chmod 600 /var/lib/pgadmin/file.pgpass
+    command: ["/bin/mkdir", "-p", "/var/lib/pgadmin/storage/pgadmin"]
     volumeMounts:
       - name: pgadmin-data
         mountPath: /var/lib/pgadmin
