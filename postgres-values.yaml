@@ -6,6 +6,7 @@ tls:
   certificatesSecret: zitadel-postgres-cert
   certFilename: "tls.crt"
   certKeyFilename: "tls.key"
+  certCAFilename: "ca.crt"
 auth:
   postgresPassword: "abc"
 primary:
