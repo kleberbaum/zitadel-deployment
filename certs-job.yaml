@@ -110,7 +110,7 @@ spec:
 
             # Create a CA key and cert for signing other certs
             createKey ca
-            openssl req -x509 -new -nodes -key ca.key -days 36500 -out ca.crt -subj "/CN=Netsnek"
+            openssl req -x509 -new -nodes -key ca.key -days 36500 -out ca.crt -subj "/CN=zitadel-db-postgresql"
 
             createKey zitadel-postgres
             createSigningRequest zitadel-postgres
