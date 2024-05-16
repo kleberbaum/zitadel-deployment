@@ -156,6 +156,7 @@ extraInitContainers: |
       - name: pgpassfile
         mountPath: /tmp/file.pgpass
         subPath: pgpassfile
+        readOnly: true
     securityContext:
       runAsUser: 5050
 
