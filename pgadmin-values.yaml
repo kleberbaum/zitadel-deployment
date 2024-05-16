@@ -88,10 +88,6 @@ extraSecretMounts:
     secret: pgadmin-pgpassfile-secret
     mountPath: "/tmp/file.pgpass"
     subPath: pgpassfile
-  - name: pgadmin-certs
-    secret: zitadel-pgadmin-cert
-    mountPath: "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/pgadmin-cert/"
-    readOnly: true
   - name: postgres-certs
     secret: zitadel-postgres-cert
     mountPath: "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/postgres-cert/"
@@ -110,7 +106,7 @@ extraInitContainers: |
       - /bin/sh
       - -c
       - |
-        mkdir -p /var/lib/pgadmin/
+        mkdir -p /var/lib/pgadmin/storage/
         cat /tmp/file.pgpass > /var/lib/pgadmin/file.pgpass
     volumeMounts:
       - name: pgadmin-data
