@@ -71,7 +71,11 @@ extraSecretMounts:
 extraInitContainers: |
   - name: add-folder-for-pgpass
     image: "dpage/pgadmin4:4.23"
-    command: ["/bin/mkdir", "-p", "/var/lib/pgadmin/storage/pgadmin"]
+    command:
+      - /bin/sh
+      - -c
+      - |
+        cat /tmp/file.pgpass > /var/lib/pgadmin/storage/file.pgpass
     volumeMounts:
       - name: pgadmin-data
         mountPath: /var/lib/pgadmin
