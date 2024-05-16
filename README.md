@@ -10,6 +10,7 @@ wget https://raw.githubusercontent.com/fhkit/zitadel-charts/main/certs-job.yaml
 wget https://raw.githubusercontent.com/fhkit/zitadel-charts/main/postgres-values.yaml
 wget https://raw.githubusercontent.com/fhkit/zitadel-charts/main/zitadel-values.yaml
 wget https://raw.githubusercontent.com/fhkit/zitadel-charts/main/pgadmin.yaml
+wget https://raw.githubusercontent.com/fhkit/zitadel-charts/main/pgadmin-values.yaml
 
 # Generate TLS certificates
 kubectl apply -f ./certs-job.yaml --namespace zitadel
@@ -21,11 +22,11 @@ helm install --wait zitadel-db bitnami/postgresql --version 15.3.2 --values ./po
 
 # Install Pgadmin
 helm repo add runix https://helm.runix.net
-helm install pgadmin4 runix/pgadmin4 --values ./pgadmin-values.yaml --namespace zitadel --create-namespace
+helm install --wait pgadmin4 runix/pgadmin4 --values ./pgadmin-values.yaml --namespace zitadel --create-namespace
 
 # Install ZITADEL
 helm repo add zitadel https://charts.zitadel.com
-helm install zitadel zitadel/zitadel --values ./zitadel-values.yaml --namespace zitadel --create-namespace
+helm install --wait zitadel zitadel/zitadel --values ./zitadel-values.yaml --namespace zitadel --create-namespace
 ```
 
 When ZITADEL is ready, you can access the GUI via port-forwarding:
