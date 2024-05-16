@@ -40,17 +40,48 @@ serverDefinitions:
   ## Can either be ConfigMap or Secret
   resourceType: ConfigMap
 
-  servers:
-    server1:
-      Name: "Zitadel"
-      Group: "Servers"
-      Host: "131.130.102.246"
-      Port: 5432
-      Username: "postgres"
-      MaintenanceDB: "postgres"
-      Shared: true
-      ConnectionParameters:
-        passfile: "../../file.pgpass"
+  # servers:
+  #   server1:
+  #     Name: "Zitadel"
+  #     Group: "Servers"
+  #     Host: "131.130.102.246"
+  #     Port: 5432
+  #     Username: "postgres"
+  #     MaintenanceDB: "postgres"
+  #     Shared: true
+  #     ConnectionParameters:
+  #       passfile: "../../file.pgpass"
+  servers: |-
+    "1": {
+      "Name": "Zitadel",
+      "Group": "Servers",
+      "HostAddr": "131.130.102.246",
+      "Port": 5432,
+      "MaintenanceDB": "postgres",
+      "Username": "postgres",
+      "SSLMode": "verify-ca",
+      "Comment": "This server has every option configured in the JSON",
+      "PassFile": "../../file.pgpass",
+      "SSLCert": "/postgres-cert/tls.crt",
+      "SSLKey": "/postgres-cert/tls.key",
+      "SSLRootCert": "/postgres-cert/ca.crt"
+    },
+    "2": {
+      "Name": "Zitadel2",
+      "Group": "Servers",
+      "HostAddr": "131.130.102.246",
+      "Port": 5432,
+      "MaintenanceDB": "postgres",
+      "Username": "zitadel",
+      "SSLMode": "verify-ca",
+      "Comment": "This server has every option configured in the JSON",
+      "PassFile": "../../file.pgpass",
+      "SSLCert": "../../tls.crt",
+      "SSLKey": "../../tls.key",
+      "SSLRootCert": "../../ca.crt"
+      "BGColor": "#ff9900",
+      "FGColor": "#000000",
+    }
 
 extraSecretMounts:
   - name: pgpassfile
@@ -65,6 +96,10 @@ extraSecretMounts:
     secret: zitadel-postgres-cert
     mountPath: "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/postgres-cert/"
     readOnly: true
+  - name: pgadmin-certs
+    secret: zitadel-pgadmin-cert
+    mountPath: "/var/lib/pgadmin/"
+    readOnly: true
 
 ## Additional InitContainers to initialize the pod
 ##
@@ -75,8 +110,8 @@ extraInitContainers: |
       - /bin/sh
       - -c
       - |
-        mkdir -p /var/lib/pgadmin/storage/
-        cat /tmp/file.pgpass > /var/lib/pgadmin/storage/file.pgpass
+        mkdir -p /var/lib/pgadmin/
+        cat /tmp/file.pgpass > /var/lib/pgadmin/file.pgpass
     volumeMounts:
       - name: pgadmin-data
         mountPath: /var/lib/pgadmin
