@@ -150,7 +150,7 @@ VolumePermissions:
 extraInitContainers: |
   - name: add-folder-for-pgpass
     image: "dpage/pgadmin4:4.23"
-    command: ["/bin/mkdir", "-p", "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/{pgadmin-cert,postgres-cert}"]
+    command: ["/bin/mkdir", "-p", "/var/lib/pgadmin/storage/pgadmin"]
     volumeMounts:
       - name: pgadmin-data
         mountPath: /var/lib/pgadmin
