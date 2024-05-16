@@ -147,9 +147,8 @@ VolumePermissions:
 ## Additional InitContainers to initialize the pod
 ##
 extraInitContainers: |
-  - name: prepare-pgpass
-    image: busybox:latest
-    imagePullPolicy: Always
+  - name: add-folder-for-pgpass
+    image: "dpage/pgadmin4:4.23"
     command: ["/bin/mkdir", "-p", "/var/lib/pgadmin/storage/pgadmin"]
     volumeMounts:
       - name: pgadmin-data
@@ -158,7 +157,7 @@ extraInitContainers: |
         mountPath: /tmp/file.pgpass
         subPath: pgpassfile
     securityContext:
-      runAsUser: 0
+      runAsUser: 5050
 
 containerPorts:
   http: 80
