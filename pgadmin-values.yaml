@@ -128,7 +128,7 @@ persistentVolume:
   annotations: {}
 
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
 
   size: 10Gi
 
