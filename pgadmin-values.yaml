@@ -94,9 +94,9 @@ networkPolicy:
 ingress:
   enabled: true
   annotations:
-    kubernetes.io/ingress.class: public
     kubernetes.io/tls-acme: "true"
     # cert-manager.io/cluster-issuer: letsencrypt-prod
+  ingressClassName: public
   hosts:
     - host: pgadmin.netsnek.com
       paths:
