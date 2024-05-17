@@ -30,7 +30,14 @@ serviceAccount:
 
 
 strategy: {}
- 
+
+extraConfigmapMounts:
+  - name: config-local
+    configMap: pgadmin4-config
+    subPath: config_local.py
+    mountPath: "/pgadmin4/config_local.py"
+    readOnly: true
+
 serverDefinitions:
   ## If true, server definitions will be created
   ##
@@ -92,19 +99,20 @@ extraSecretMounts:
     readOnly: true
   - name: pgadmin-certs
     secret: zitadel-pgadmin-cert
-    mountPath: "/var/lib/pgadmin/"
+    mountPath: "/var/lib/pgadmin/certs/pgadmin-cert"
     readOnly: true
 
 ## Additional InitContainers to initialize the pod
 ##
 extraInitContainers: |
-  - name: add-folder-for-pgpass
+  - name: prepare-pgpass
     image: "dpage/pgadmin4:4.23"
     command:
       - /bin/sh
       - -c
       - |
         mkdir -p /var/lib/pgadmin/storage/
+        mkdir -p /var/lib/pgadmin/certs/
         cat /tmp/file.pgpass > /var/lib/pgadmin/file.pgpass
     volumeMounts:
       - name: pgadmin-data

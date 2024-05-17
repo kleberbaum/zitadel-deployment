@@ -6,3 +6,20 @@ type: Opaque
 stringData:
   pgpassfile: |
     postgresql:5432:*:postgres:postgres
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pgadmin-pgpassfile-secret
+type: Opaque
+stringData:
+  pgpassfile: |
+    hostname:port:database:username:password
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin4-config
+data:
+  config_local.py: |-
+    SHARED_STORAGE = [{ 'name': 'Certs', 'path': '/var/lib/pgadmin/certs/', 'restricted_access': False}]
