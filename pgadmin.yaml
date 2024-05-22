@@ -56,6 +56,7 @@ data:
         }
       }
     ]
+    SHARED_STORAGE = [{ 'name': 'Certs', 'path': '/var/lib/pgadmin/certs/', 'restricted_access': False}]
 ---
 apiVersion: v1
 kind: Secret
@@ -65,11 +66,3 @@ type: Opaque
 stringData:
   pgpassfile: |
     hostname:port:database:username:password
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: pgadmin4-config
-data:
-  config_local.py: |-
-    SHARED_STORAGE = [{ 'name': 'Certs', 'path': '/var/lib/pgadmin/certs/', 'restricted_access': False}]

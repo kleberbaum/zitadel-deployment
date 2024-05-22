@@ -31,13 +31,6 @@ serviceAccount:
 
 strategy: {}
 
-extraConfigmapMounts:
-  - name: config-local
-    configMap: pgadmin4-config
-    subPath: config_local.py
-    mountPath: "/pgadmin4/config_local.py"
-    readOnly: true
-
 serverDefinitions:
   ## If true, server definitions will be created
   ##
