@@ -36,35 +36,40 @@ kubectl port-forward svc/my-zitadel 8080
 ```
 
 ```bash
-kubectl get job --all-namespaces
+kubectl get job --namespace zitadel
 
 # reinstall postgresql
-kubectl delete job create-certs
-kubectl delete job zitadel-init
-kubectl delete job zitadel-setup
+kubectl delete job create-certs --namespace zitadel
+kubectl delete job zitadel-init --namespace zitadel
+kubectl delete job zitadel-setup --namespace zitadel
 
 # switch from cockroachdb
-kubectl delete job db-cockroachdb-init
-kubectl delete job create-zitadel-cert
-kubectl delete job db-cockroachdb-rotate-self-signer-client-28569480
-kubectl delete job db-cockroachdb-rotate-self-signer-client-28575240
-kubectl delete job zitadel-init
-kubectl delete job zitadel-setup
+kubectl delete job db-cockroachdb-init --namespace zitadel
+kubectl delete job create-zitadel-cert --namespace zitadel
+kubectl delete job db-cockroachdb-rotate-self-signer-client-28569480 --namespace zitadel
+kubectl delete job db-cockroachdb-rotate-self-signer-client-28575240 --namespace zitadel
+kubectl delete job zitadel-init --namespace zitadel
+kubectl delete job zitadel-setup --namespace zitadel
 
-helm list
-helm uninstall db
-helm uninstall zitadel
+helm list --namespace zitadel
+helm uninstall db --namespace zitadel
+helm uninstall zitadel --namespace zitadel
 
 # reinstall postgresql
-kubectl delete pvc data-db-postgresql-0
+kubectl delete pvc data-db-postgresql-0 --namespace zitadel
 
 # switch from cockroachdb
-kubectl delete pvc datadir-db-cockroachdb-0
-kubectl delete pvc datadir-db-cockroachdb-1
-kubectl delete pvc datadir-db-cockroachdb-2
+kubectl delete pvc datadir-db-cockroachdb-0 --namespace zitadel
+kubectl delete pvc datadir-db-cockroachdb-1 --namespace zitadel
+kubectl delete pvc datadir-db-cockroachdb-2 --namespace zitadel
 
-kubectl get configmap
-kubectl delete configmap zitadel-config-yaml
+kubectl get configmap --namespace zitadel
+kubectl delete configmap zitadel-config-yaml --namespace zitadel
+
+kubectl get secrets --namespace zitadel
+kubectl delete secrets zitadel-postgres-cert --namespace zitadel
+kubectl delete secrets zitadel-internal-cert --namespace zitadel
+kubectl delete secrets zitadel-external-cert --namespace zitadel
 ```
 
 Now, open https://accounts.photonq.org in your browser and log in with the following credentials:
