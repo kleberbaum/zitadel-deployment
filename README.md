@@ -27,6 +27,9 @@ helm install --wait pgadmin4 runix/pgadmin4 --values ./pgadmin-values.yaml --nam
 # Install ZITADEL
 helm repo add zitadel https://charts.zitadel.com
 helm install --wait zitadel zitadel/zitadel --values ./zitadel-values.yaml --namespace zitadel --create-namespace
+
+kubectl apply -f ./pgadmin.yaml --namespace zitadel
+
 ```
 
 When ZITADEL is ready, you can access the GUI via port-forwarding:
