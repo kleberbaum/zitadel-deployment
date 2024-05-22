@@ -148,6 +148,6 @@ zitadel:
         Admin:
           Password: abc
 
-  dbSslCaCrtSecret: zitadel-postgres-cert
-  dbSslAdminCrtSecret: zitadel-postgres-cert
-  dbSslUserCrtSecret: zitadel-cert
+  dbSslCaCrtSecret: postgres-cert
+  dbSslAdminCrtSecret: postgres-cert
+  dbSslUserCrtSecret: postgres-unprivileged-cert
