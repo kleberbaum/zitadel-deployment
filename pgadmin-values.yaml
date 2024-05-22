@@ -72,21 +72,21 @@ serverDefinitions:
       SSLCert: "/postgres-cert/tls.crt"
       SSLKey: "/postgres-cert/tls.key"
       SSLRootCert: "/postgres-cert/ca.crt"
-    server2:
-      Name: "Zitadel2"
-      Group: "Servers"
-      Host: "131.130.102.246"
-      Port: 5432
-      MaintenanceDB: "postgres"
-      Username: "zitadel"
-      SSLMode: "verify-ca"
-      Comment: "This server has every option configured in the JSON"
-      PassFile: "../../file.pgpass"
-      SSLCert: "../../tls.crt"
-      SSLKey: "../../tls.key"
-      SSLRootCert: "../../ca.crt"
-      BGColor: "#ff9900"
-      FGColor: "#000000"
+    # server2:
+    #   Name: "Zitadel2"
+    #   Group: "Servers"
+    #   Host: "131.130.102.246"
+    #   Port: 5432
+    #   MaintenanceDB: "postgres"
+    #   Username: "zitadel"
+    #   SSLMode: "verify-ca"
+    #   Comment: "This server has every option configured in the JSON"
+    #   PassFile: "../../file.pgpass"
+    #   SSLCert: "../../tls.crt"
+    #   SSLKey: "../../tls.key"
+    #   SSLRootCert: "../../ca.crt"
+    #   BGColor: "#ff9900"
+    #   FGColor: "#000000"
 
 extraSecretMounts:
   - name: pgpassfile
@@ -94,13 +94,13 @@ extraSecretMounts:
     mountPath: "/tmp/file.pgpass"
     subPath: pgpassfile
   - name: postgres-certs
-    secret: zitadel-postgres-cert
+    secret: postgres-cert
     mountPath: "/var/lib/pgadmin/storage/zitadel-admin_netsnek.com/postgres-cert/"
     readOnly: true
-  - name: pgadmin-certs
-    secret: zitadel-pgadmin-cert
-    mountPath: "/var/lib/pgadmin/certs/pgadmin-cert"
-    readOnly: true
+  # - name: pgadmin-certs
+  #   secret: pgadmin-cert
+  #   mountPath: "/var/lib/pgadmin/certs/pgadmin-cert"
+  #   readOnly: true
 
 ## Additional InitContainers to initialize the pod
 ##
