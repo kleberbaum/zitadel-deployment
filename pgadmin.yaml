@@ -1,11 +1,61 @@
+#
+# secrets.yaml
+#
+# OAuth2 client id and secret value is sensitive information
+# Store it securely in a secret
+---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: pgadmin-pgpassfile-secret
+  name: pgadmin4-oauth2-secret
 type: Opaque
 stringData:
-  pgpassfile: |
-    postgresql:5432:*:postgres:postgres
+  OAUTH2_CLIENT_ID: ******
+  OAUTH2_CLIENT_SECRET: ******
+
+#
+# configmaps.yaml
+#
+# To setup Google OAuth
+## https://support.google.com/googleapi/answer/6158849?hl=en#
+# To setup Github OAuth
+## https://docs.github.com/en/developers/apps/building-oauth-apps/creating-an-oauth-app
+# To setup Microsoft Azure AD OAuth
+## https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app
+# redirect|callback URI to set:
+## https://pgadmin4.example.com/oauth2/authorize
+# logout URL (required for Microsoft OAuth)
+## https://pgadmin4.example.com/oauth2/logout
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgadmin4-config
+data:
+  config_local.py: |-
+    import os
+    
+    MASTER_PASSWORD_REQUIRED = True
+    AUTHENTICATION_SOURCES = ['oauth2', 'internal']
+    OAUTH2_AUTO_CREATE_USER = True
+    OAUTH2_CONFIG = [
+      {
+        'OAUTH2_NAME': 'netsnek-oidc',
+        'OAUTH2_DISPLAY_NAME': 'Netsnek OIDC',
+        'OAUTH2_CLIENT_ID': os.environ['OAUTH2_CLIENT_ID'],
+        'OAUTH2_CLIENT_SECRET': os.environ['OAUTH2_CLIENT_SECRET'],
+        'OAUTH2_TOKEN_URL': 'https://accounts.netsnek.com/oauth/v2/token',
+        'OAUTH2_AUTHORIZATION_URL': 'https://accounts.netsnek.com/oauth/v2/authorize',
+        'OAUTH2_API_BASE_URL': 'https://accounts.netsnek.com/oauth/v2/',
+        'OAUTH2_USERINFO_ENDPOINT': 'https://accounts.netsnek.com/oidc/v1/userinfo',
+        'OAUTH2_SCOPE': 'openid profile email',
+        'OAUTH2_ICON': 'fa-spider',
+        'OAUTH2_BUTTON_COLOR': '#0000ff',
+        'OAUTH2_ADDITIONAL_CLAIMS': {
+          'groups': ["{LIST_OF_YOUR_GROUP_GUIDS}"],
+        }
+      }
+    ]
 ---
 apiVersion: v1
 kind: Secret

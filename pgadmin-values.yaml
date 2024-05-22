@@ -145,9 +145,22 @@ ingress:
 
 # Additional config maps to be mounted inside a container
 # Can be used to map config maps for sidecar as well
-extraConfigmapMounts: []
+#extraConfigmapMounts: []
+
+# Add config_local.py file to set OAuth2 configuration
+# For details check documentation
+# https://www.pgadmin.org/docs/pgadmin4/latest/oauth2.html
+extraConfigmapMounts:
+  - name: config-local
+    configMap: pgadmin4-config
+    subPath: config_local.py
+    mountPath: "/pgadmin4/config_local.py"
+    readOnly: true
 
 existingSecret: ""
+
+envVarsFromSecrets:
+  - pgadmin4-oauth2-secret
 
 env:
   # can be email or nickname
